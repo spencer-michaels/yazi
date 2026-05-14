@@ -1,3 +1,78 @@
+> ## 🧪 Test fork
+>
+> This is a personal fork of [sxyazi/yazi](https://github.com/sxyazi/yazi) that adds an `exclude` option for hiding files by glob pattern — proposed upstream in [#3835](https://github.com/sxyazi/yazi/issues/3835).
+>
+> Files matching any pattern are always hidden, even when `show_hidden` is on — a separate axis from dotfile visibility, for things you never want to see (build artifacts, OS junk, etc.).
+>
+> ### Build
+>
+> ```bash
+> git clone https://github.com/spencer-michaels/yazi
+> cd yazi
+> cargo build --release --bin yazi
+> ./target/release/yazi
+> ```
+>
+> Requires Rust 1.92+ (MSRV) and nightly rustfmt if you plan to format.
+>
+> ### Configure
+>
+> Add an `exclude` list under `[mgr]` in `~/.config/yazi/yazi.toml`:
+>
+> ```toml
+> [mgr]
+> exclude = [
+>   ".DS_Store",          # exact filename
+>   "Thumbs.db",          # exact filename
+>   "*.pyc",              # filename glob (matches anywhere)
+>   "*.o",
+>   "__pycache__",        # bare directory name
+>   "node_modules",
+>   "build/output/*.tmp", # path pattern — auto-prefixed with **/, only matches under build/output
+>   "**/cache.bin",       # explicit **/ — left as-is
+> ]
+> ```
+>
+> **Pattern rules:**
+> - Patterns **without `/`** match against filenames only (e.g. `*.pyc` hides every `.pyc` in any directory).
+> - Patterns **with `/`** match against the full path, auto-prefixed with `**/` if not rooted (so `build/output/*.tmp` is treated as `**/build/output/*.tmp`).
+> - Patterns starting with `/` or `**/` are used as-is.
+> - Default is `exclude = []` — no behavior change.
+>
+> Stable yazi silently ignores the unknown `exclude` field, so this config is safe to keep across both binaries.
+>
+> ### Keybindings
+>
+> | Key | Action | What it does |
+> | --- | --- | --- |
+> | <kbd>E</kbd> | `excluded toggle` | Toggle visibility of excluded files (per-tab) |
+> | <kbd>.</kbd> | `hidden toggle` | Toggle dotfile visibility — unchanged, independent of `exclude` |
+>
+> The `excluded` action accepts the same state arguments as `hidden`:
+>
+> ```
+> excluded show     # always show excluded files in this tab
+> excluded hide     # always hide them
+> excluded toggle   # flip current state
+> ```
+>
+> To rebind, override in `~/.config/yazi/keymap.toml`:
+>
+> ```toml
+> [[mgr.prepend_keymap]]
+> on  = "<C-e>"
+> run = "excluded toggle"
+> desc = "Toggle excluded files"
+> ```
+>
+> ### Behavior notes
+>
+> - `show_excluded` is **per-tab** — toggling in one tab doesn't affect others.
+> - Toggling `show_hidden` (with <kbd>.</kbd>) does **not** reveal excluded files; the two axes are independent.
+> - Excluded files are still on disk and can be operated on by name — they're just hidden from the listing.
+>
+> ---
+
 <div align="center">
 	<sup>Special thanks to:</sup><br>
 
