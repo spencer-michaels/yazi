@@ -5,7 +5,7 @@ use yazi_codegen::{DeserializeOver, DeserializeOver2};
 use yazi_fs::{SortBy, SortFallback};
 use yazi_shim::{arc_swap::IntoPointee, cell::SyncCell};
 
-use super::{MgrRatio, MouseEvents};
+use super::{MgrExclude, MgrRatio, MouseEvents};
 
 #[derive(Debug, Deserialize, DeserializeOver, DeserializeOver2)]
 pub struct Mgr {
@@ -26,6 +26,7 @@ pub struct Mgr {
 	pub show_symlink: SyncCell<bool>,
 	pub scrolloff:    SyncCell<u8>,
 	pub mouse_events: SyncCell<MouseEvents>,
+	pub exclude:      MgrExclude,
 }
 
 fn deserialize_linemode<'de, D>(deserializer: D) -> Result<ArcSwap<String>, D::Error>

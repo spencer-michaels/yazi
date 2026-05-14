@@ -1,1 +1,1 @@
-yazi_macro::mod_flat!(mgr mouse ratio);
+yazi_macro::mod_flat!(exclude mgr mouse ratio);

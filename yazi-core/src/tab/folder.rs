@@ -27,7 +27,7 @@ impl Default for Folder {
 		Self {
 			url:    Default::default(),
 			cha:    Default::default(),
-			files:  Files::new(YAZI.mgr.show_hidden.get()),
+			files:  Files::new(YAZI.mgr.show_hidden.get(), YAZI.mgr.exclude.get()),
 			stage:  Default::default(),
 			offset: Default::default(),
 			cursor: Default::default(),

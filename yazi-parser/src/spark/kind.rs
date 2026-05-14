@@ -8,6 +8,9 @@ pub enum SparkKind {
 
 	// mgr:close
 	KeyClose,
+	// mgr:excluded
+	KeyExcluded,
+	IndExcluded,
 	// mgr:hidden
 	KeyHidden,
 	IndHidden,

@@ -6104,6 +6104,7 @@ dependencies = [
  "dirs",
  "either",
  "foldhash 0.2.0",
+ "globset",
  "hashbrown 0.17.0",
  "libc",
  "objc2",

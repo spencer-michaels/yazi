@@ -39,6 +39,7 @@ pub enum Spark<'a> {
 	Download(crate::mgr::DownloadForm),
 	Enter(crate::VoidForm),
 	Escape(crate::mgr::EscapeForm),
+	Excluded(crate::mgr::ExcludedForm),
 	EscapeFilter(crate::VoidForm),
 	EscapeFind(crate::VoidForm),
 	EscapeSearch(crate::VoidForm),
@@ -167,6 +168,9 @@ impl<'a> Spark<'a> {
 
 			// mgr:close
 			KeyClose => Self::Close(<_>::from_lua(value, lua)?),
+			// mgr:excluded
+			KeyExcluded => Self::Excluded(<_>::from_lua(value, lua)?),
+			IndExcluded => Self::Excluded(<_>::from_lua(value, lua)?),
 			// mgr:hidden
 			KeyHidden => Self::Hidden(<_>::from_lua(value, lua)?),
 			IndHidden => Self::Hidden(<_>::from_lua(value, lua)?),
@@ -226,6 +230,7 @@ impl<'a> IntoLua for Spark<'a> {
 			Self::Download(b) => b.into_lua(lua),
 			Self::Enter(b) => b.into_lua(lua),
 			Self::Escape(b) => b.into_lua(lua),
+			Self::Excluded(b) => b.into_lua(lua),
 			Self::EscapeFilter(b) => b.into_lua(lua),
 			Self::EscapeFind(b) => b.into_lua(lua),
 			Self::EscapeSearch(b) => b.into_lua(lua),
@@ -401,6 +406,7 @@ try_from_spark!(crate::mgr::FilterForm, mgr:filter, mgr:filter_do);
 try_from_spark!(crate::mgr::FindArrowForm, mgr:find_arrow);
 try_from_spark!(crate::mgr::FindDoForm, mgr:find_do);
 try_from_spark!(crate::mgr::FindForm, mgr:find);
+try_from_spark!(crate::mgr::ExcludedForm, mgr:excluded);
 try_from_spark!(crate::mgr::HardlinkForm, mgr:hardlink);
 try_from_spark!(crate::mgr::HiddenForm, mgr:hidden);
 try_from_spark!(crate::mgr::HoverForm, mgr:hover);

@@ -126,6 +126,7 @@ impl<'a> Executor<'a> {
 		on!(rename);
 		on!(copy);
 		on!(shell);
+		on!(excluded);
 		on!(hidden);
 		on!(linemode);
 		on!(search);
